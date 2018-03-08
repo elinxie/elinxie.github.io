@@ -1,0 +1,3 @@
+main.py does all of the morphing, from the mean face to the face morph to the data-driven face averaging. The mean face and face averaging are mostly scripted, but the face morph is done mostly through the function create_morph.
+
+The extra-credit gifs were made in main.py, but the video was compiled with the music with Premiere Pro 

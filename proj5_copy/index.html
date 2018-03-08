@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<title>Proj 5 Eric Linxie</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+    height: 100%;
+    font-family: "Inconsolata", sans-serif;
+}
+.bgimg {
+    background-position: center;
+    background-size: cover;
+    background-image: url("array-headon.png");
+    min-height: 75%;
+}
+.menu {
+    display: none;
+}
+</style>
+<body>
+
+
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">Depth Refocusing and Aperture Adjustment with Light Field Data</span>
+  </div>
+  <div class="w3-display-middle w3-center ">
+    <span class="w3-text-white" style="font-size:90px">Project 5<br>Eric Linxie</span>
+  </div>
+  <div class="w3-display-bottomright w3-center w3-padding-large">
+    <span class="w3-text-white">Cs194-26 computational photography Fall 2017</span>
+  </div>
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand  w3-large">
+
+<!-- Depth Refocusing Container -->
+<div class="w3-container" id="summary">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Summary</span></h5>
+    <p>In this project, I am given lightfield data, which are sets of images, each set refering to a certain scene, that form a 17 x 17 matrix. The project goal is to shift and sum up these pictures to one image in various ways to program focus and apeture change in. In other words, I am supposed to make it like I am changing the focus and an apeture of an image.</p>
+    
+  </div>
+</div>
+
+
+
+<!-- Depth Refocusing Container -->
+<div class="w3-container" id="refocus">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Depth Refocusing with Lightfield Data</span></h5>
+    <p>For Depth refocusing, I shifted each image by C * (im.x, center.x) to the right and C * (im.y, center.y) down. C is the measure of where I want to focus. C = 0 is if I focus around the center. The lesser C is, the closer towards the camera I am focusing to. The greater C is, the farther. C can be negative or positive. im.x and im.y are the x and y coords of the image I want to shift, and center.x and center.y are the x and y coords of the center image of my set/matrix, that I want to move my image towards </p>
+    
+    <img src="rectified/refocused/animation_refocus_2.gif" style="width:100%;max-width:1000px" class="w3-margin-top">
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>Lego knights, refocusing</i></p>
+      <p>C in range [-0.7, 0.5], steps of 0.05</p>
+    </div>
+    <img src="treasure/refocused/animation_refocus_2.gif" style="width:100%;max-width:1000px" class="w3-margin-top">
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>"Treasure Box, refocusing</i></p>
+      <p>C in range [-0.5, 0.5] steps of 0.1</p>
+    </div>
+  </div>
+</div>
+
+<!-- Aperture Adjustment Container -->
+<div class="w3-container" id="apeture">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Apeture Adjustment with Lightfield Data</span></h5>
+
+    <p>For apeture adjustment, I had settings of n = 0 to 8 to represent how large my programmatic apeture will be. The variable n corresponds to how many images up, down, left and right from the middle we will use to sum up to our final image. In other words, if n = 1, then I have a 3x3 matrix I sum my new picture with. If n = 4, I have a 9x9 matrix. The larger the number, the larger my apeture is on the picture. </p>
+    
+    <img src="rectified/aperture/animation_apeture.gif" style="width:100%;max-width:1000px" class="w3-margin-top">
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>Lego nights, Apeture Adjustment</i></p>
+      <p>n in range [0, 8], steps of 1, c = 0.0</p>
+    </div>
+    <img src="treasure/aperture/animation_apeture.gif" style="width:100%;max-width:1000px" class="w3-margin-top">
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>Treasure Box, Apeture Adjustment</i></p>
+      <p>n in range [0,8] steps of 1, c = 0.0</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<!--
+To use this code on your website, get a free API key from Google.
+Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+-->
+
+</body>
+</html>

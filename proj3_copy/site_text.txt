@@ -1,0 +1,50 @@
+part 1.1 original image
+part 1.1 sharpened image
+part 1.2 picture of nutmeg, the cat
+part 1.2 picture of Derek
+part 1.2 hybrid of cat and Derek
+part 1.2 picture of napoleon
+part 1.2 picture of toy sloth
+part 1.2 hybrid of napoleon and toy sloth. This mix failed because the shape of the toy sloth was too small comepared to napoleon. It makes it unclear whether the body is the sloth's small body or napoleon's larger body
+part 1.2 picture of oliver, a photographer
+part 1.2 picture of a kid as a clown. This blend is my favorite because the blend is so distinct
+part 1.2 frequency domain of oliver
+part 1.2 log of frequency domain
+part 1.2 freq domain of kid
+part 1.2 log of freq domain
+part 1.2 the hybrid of the kid and oliver. 
+part 1.3 gaussian stack of hybrid lvl 1
+part 1.3 gaussian stack of hybrid lvl 2
+part 1.3 gaussian stack of hybrid lvl 3
+part 1.3 gaussian stack of hybrid lvl 4
+part 1.3 gaussian stack of hybrid lvl 5
+part 1.3 laplacian stack of hybrid lvl 1
+part 1.3 laplacian stack of hybrid lvl 2
+part 1.3 laplacian stack of hybrid lvl 3
+part 1.3 laplacian stack of hybrid lvl 4
+part 1.3 laplacian stack of hybrid lvl 5
+part 1.4 original orange 
+part 1.4 original apple
+part 1.4 orange mask
+part 1.4 orapple
+part 1.4 guy with side hand
+part 1.4 death star
+part 1.4 mask for the guy
+part 1.4 side hand with death star blend
+part 1.4 scarface
+part 1.4 different death star picture
+part 1.4 mask for death star
+part 1.4 hybrid of death star and scarface
+part 2.2 if we just pasted the death star on scarface
+part 2.2 Poisson blend of deathstar on scarface. This is better because the poisson blend keeps all the features of the death star. The multiresolution blends not only the colors of the two pictures but the facial features of scarface and the features of the death star. The poisson blend works like so. You take the source image aligned to the target image, the target image, and the mask. You build matrix A and vector b, that display the relationship between the final image, represented by vector v, and the input images. If a pixel in vector v does not fall within the mask, then it equals the corresponding target image pixel. If the pixel is inside the mask, then it applies the laplacian filter on that pixel, by turning certain values in the corresponding row in A non-zero according to the laplacian. The b side will equal the laplacian filter on the same set of pixels in the source image. If there are edges, we add corresponding target pixels to b and turn the corresponding row values back to zero.
+part 2.2 toronto 
+part 2.2 drake's face
+part 2.2 mask for face
+part 2.2 pasted drake's face
+part 2.2 poisson blend of drake's face. This blend does not work too well because Drake's face is a drastically different color than the toronto sky. The features of him are mostly there, but the colors make him look too blue compared to the regular image.
+part 2.2 toronto again. 
+part 2.2 char's zaku 
+part 2.2 mask for zaku
+part 2.2 pasted zaku on toronto
+part 2.2 poisson blend of zaku on toronto. This is my favorite poisson blend. This one works because the colors of the zaku are similar to the color of toronto's sky.
+

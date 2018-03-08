@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<title>Proj 6a</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>Eric Linxie<br>Computational Photography</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#Rectified_Images" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Rectified Images</a> 
+    <a href="#Methodology" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Methodology</a> 
+    <a href="#east_asian" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">East Asian Library</a> 
+    <a href="#mccone_hall" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">McCone Hall</a> 
+    <a href="#church_pictures" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Church Pictures</a> 
+    <a href="#Lessons" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lessons</a> 
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Company Name</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="Rectified_Images">
+    <h1 class="w3-jumbo"><b>Project 6 part A, Mosaics</b></h1>
+    <h1 class="w3-xxxlarge w3-text-red"><b>Rectified Images</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <p>
+    I rectified two images so that the main rectangle-like feature on each will show flat as a rectangle. I use similiar methology to what I wrote for the mosiacs (described below)
+  </p>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="pictures_raw/unsorted/im3.jpg" style="width:100%" onclick="onClick(this)" alt="picture in McCone Hall original">
+      <p>picture in McCone Hall original</p>
+      <img src="pictures_raw/unsorted/im4.jpg" style="width:100%" onclick="onClick(this)" alt="The Organic Coop A frame original picture">  
+      <p>The Organic Coop A frame original picture</p>
+    </div>
+    <div class="w3-half">
+      <img src="pictures_raw/unsorted/im3_rect.jpg" style="width:100%" onclick="onClick(this)" alt="Picture in McCone Hall Rectified to square">
+      <p>Picture in McCone Hall Rectified to square</p>
+      <img src="pictures_raw/unsorted/im4_rect.jpg" style="width:100%" onclick="onClick(this)" alt="Organic Coop A frame rectified to rectangle (not entirely perfect)"> <p>Organic Coop A frame rectified to rectangle (not entirely perfect)</p>
+    </div>
+  </div>
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Designers -->
+  <div class="w3-container" id="Methodology style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Methodology</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Below are pictures of three Mosiacs
+        <ol>
+          <li>East Asian Library, Berkeley</li>
+          <li>McCone Hall, Berkeley</li>
+          <li>Pictures in  my church building, Alameda</li>
+        </ol>
+    </p>
+    <p>
+      <h2>Corresponding Points</h2>
+      I first plotted corresponding points between images I wanted to blend into mosiacs. For each mosiac I blended two images. 
+    </p>
+    <p>
+      <h2>Homography</h2>
+      Next, with the images between each point, I computed a 3x3 homography between them. With this matrix, I can take one of my corresponding points in one image and then apply it to another 
+    </p>
+    <p>
+      <h2>Warping</h2>
+      I applied the homography to one of the images using scikit's warp function. 
+    </p>
+    <p>
+      <h2>Blending</h2>
+      I tried three blends
+      <ol>
+        <li>adding two images together and having one overlap another (overlap method)</li>
+        <li>Adding half of each image in an overlap area between the two images, then adding the remaining non-intersecting parts (Linear Blending</li>
+        <li>Masking from the middle of the intersection section to the end of one image to apply Project 3's laplacian stack blend. (Laplacian Blending)</li>
+      </ol>
+    </p>
+  </div>
+
+  <div class="w3-container" style="margin-top:80px" id="east_asian">
+    <h1 class="w3-xxxlarge w3-text-red"><b>East Asian Library</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="pictures_raw/first_set/im2.jpg" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic</p>
+      <img src="pictures_raw/first_set/im1.jpg" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/y3gjubaywqbeyxn/im1_im2_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/hl86mfrhfea64bb/im1_im2_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+      <img src="https://www.dropbox.com/s/07nyvmrg9vq09yz/im1_im2_lap.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Laplacian blend"> 
+      <p>Mosiac with Laplacian blend</p>
+    </div>
+  </div>
+
+<div class="w3-container" style="margin-top:80px" id="mccone_hall">
+    <h1 class="w3-xxxlarge w3-text-red"><b>McCone Hall</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="pictures_raw/unsorted/im5.jpg" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic</p>
+      <img src="pictures_raw/unsorted/im6.jpg" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/cjqlky9343g4zzc/im5_im6_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/et96mzv04svrbkx/im5_im6_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+      <img src="https://www.dropbox.com/s/jjw5jyd3fjpgkm8/im5_im6_lap.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Laplacian blend"> 
+      <p>Mosiac with Laplacian blend</p>
+    </div>
+  </div>
+
+<div class="w3-container" style="margin-top:80px" id="church_pictures">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Church Pictures</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="pictures_raw/unsorted_2/im8.jpg" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic</p>
+      <img src="pictures_raw/unsorted_2/im9.jpg" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/yte0x6g8iy52zbr/im9_im8_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/lktnlth2bm3sell/im9_im8_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+      <img src="https://www.dropbox.com/s/eczae5yv9rjaxvd/im9_im8_lap.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Laplacian blend"> 
+      <p>Mosiac with Laplacian blend</p>
+    </div>
+  </div>
+
+  <!-- Designers -->
+  <div class="w3-container" id="Methodology style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Part B, find matching corners automatically</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    
+    <p>
+      Below are the results of auto-stiching, where we find the points of interest automatically, and use those points to stitch images together. The process is divided into two parts
+      <h2>Find the corners: Feature detection</h2>
+      I used a function called get_harris_corners, given by the staff, to find all the x,y coords that might be a corner, according to the definition of a harris corner. A harris corner is a patch where if we move it, the image vector changes dramatically. In the middle of the corner is the x,y coord. 
+
+      I used Adaptive Non-Maximal Suppression described in the Brown paper (given in the project) to filter out a lot of the harris corner points (so we do not have to process too many points). ANMS takes every corner, finds its Fhm value (the value on the matrix given in get_harris_corners, the coord's corner strength), and assigns each corner a value r that is the shortest distance between it and another corner that is a constant stronger than it. 
+    </p>
+    <p>
+      <h2>Match corners of two images together: Feature Matching</h2>
+      We do this by 
+      <ol>
+        <li>
+          <h3>'Russian Granny' Algorithm</h3>
+          I take one patch p1 in one image, find the closest patch p2 in the other image based on lowest ssd. Record error as 1-NN. Then find second closest patch, call difference 2-NN. if 1-NN / 2-NN is below a certain threshold I set, then I add p1 and p2 as a pair.
+        </li>
+        <li>
+          <h3>RANSAC</h3>
+          <ol>
+            <li>Take any four pairs of points (p1, p2) randomly</li>
+            <li>make a homography out of them, H</li>
+            <li>find inliers using this homography, where SSD of p2 and Hp1 is less than a threshold epsilon</li>
+            <li>Keep number of inliers, repeat</li>
+          </ol>
+          Repeat this loop for a certain amount of time. We can do all unique combinations of points. We do this loop and choose the four points that give us the most inliers. Then we refind the inliers, make another homography H_new, out of all the inliers. 
+        </li>
+      </ol>
+    </p>
+    
+
+ <div class="w3-container" style="margin-top:80px" i>
+    <h1 class="w3-xxxlarge w3-text-red"><b>East Asian Library auto plot</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/6fn9soajo4jsh1d/im2_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic with auto-located dots</p>
+      <img src="https://www.dropbox.com/s/xpe8knvak763yd8/im1_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic with auto-located dots</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/9rvj1jmcunwsml8/im1_auto_im2_auto_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/n9e49ca59oqejl0/im1_auto_im2_auto_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+    </div>
+  </div>
+
+<div class="w3-container" style="margin-top:80px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>McCone Hall automatic</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/ad9dk05744n763r/im5_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic with auto-located dots</p>
+      <img src="https://www.dropbox.com/s/20ows4nt5oiuegx/im6_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic with auto-located dots</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/e4nqnhtmlavpln0/im5_auto_im6_auto_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/hcj4miv9l6n3132/im5_auto_im6_auto_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+    </div>
+  </div>
+
+<div class="w3-container" style="margin-top:80px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Church Pictures automatic</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/vlly8f1ldx8ki0g/im8_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original right-hand picture of mosaic">
+      <p>Original right-hand picture of mosaic with auto-located dots</p>
+      <img src="https://www.dropbox.com/s/4zd56cyjj3480hy/im9_auto_with_dots.png?dl=1" style="width:100%" onclick="onClick(this)" alt="Original left-hand picture of mosaic">  
+      <p>Original left-hand picture of mosaic</p>
+    </div>
+    <div class="w3-half">
+      <img src="https://www.dropbox.com/s/qdoz1qoabsbv4si/im9_auto_im8_auto_naive.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Overlap blend">
+      <p>Mosiac with Overlap blend</p>
+      <img src="https://www.dropbox.com/s/531a7mg7n6kgzr8/im9_auto_im8_auto_lin.jpg?dl=1" style="width:100%" onclick="onClick(this)" alt="Mosiac with Linear blend"> 
+      <p>Mosiac with Linear blend</p>
+    </div>
+  </div>
+
+
+  <!-- Services -->
+  <div class="w3-container" id="Lessons" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Lessons</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>
+      <ul>
+        <h2>PART A</h2>
+        <li>Just a little difference in pixels can make the mosaic image look divided and nastly-cut. We see this in the Picture of East Asian Library. One coordinate point would hit an intersection between two lines in the picture. The corresponding point on the second image would be a few pixels off the intersection, and a few points like these make it so the top of the library does not look completely straight.</li>
+        <li>Just naively stiching one image on top of the other does not look good, especially when the homography between the two takes one image and slants it drastically. We see this in the mosiac of McCone Hall. It looks jarring to see one rectangle of a darker color overlayed on top of a signifigantly larger slanted image. </li> 
+        <li>Gaussian/laplacian blending can only make the intersect between two images seem smoother. It is limited and cannot solve for major color differences between two images. We see this again in the McCone Hall laplacian-blended mosaic</li>
+
+        <h2>PART B</h2>
+        <li>depending on parameters and how you define your thresholds, you can actually have less points than if you did stitching manually, manually can work better in some cases. </li>
+        <li>The same thresholds will not work for every image, especially in east asian library where some of the features looked repeated. </li>
+        <li>This project takes a lot of processing power and even a lot of disk space if I am not careful about filtering first. Without ANMS this program ended up taking 20 GB of disk (because there were at least 100000 harris corners detected.)</li>
+      </ul>
+    </p>
+  </div>
+  
+
+
+<!-- End page content -->
+</div>
+
+<!-- W3.CSS Container -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
+
+</body>
+</html>

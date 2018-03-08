@@ -1,0 +1,39 @@
+# README
+# # fake miniatures
+The code for fake miniatures is in main.py and main.ipynb. This code takes a picture, askes for two points to create an artificial depth of field, and then creates a copy of a new picture that is the same name as the old one with the word 'fake' in front
+
+# how to use
+Pictures are not included, make sure you put in your pictures first.
+
+On terminal
+
+```
+python main.py image_path sigma vert
+```
+
+where 
+
+image_path is the name of the path of the image you want to use
+
+sigma is the sigma float value you want your gaussian filter to be (the larger the value is the more blurry your picture will be in non-focused parts). Default value is 3.
+
+vert is a true or false value that signifies whether you want a horizontal DOF or a vertical DOF. If vert=False, then select two points to make a horizontal region that will be clear. If vert=True, then select two points to make a vertical region that will be clear. vert is False by default.
+
+After you run this code, you will see a popup window with your original image. Choose two points. The two points will be the borders of your horizontal or vertical DOF region (depending on your value for vert). If you have horizontal DOF, then choose the top of the region first then the bottom. If you have vertical DOF, choose left border then right border of the DOF region.
+
+The code 
+
+you will recieve your fake miniature in a file name 'fake_'+image_path. So if you have image_path like images/im3.jpg, be sure to make a folder called fake_images so the program can put the image into the path name fake_images/im3.jpg
+
+for example
+
+```
+python main.py im3.jpg 2 True
+```
+Takes the image im3.jpg in the same directory, makes a vertical DOF region out of the two points you choose, applies the gaussian filter to the mask signifying your DOF region and your image with a sigma value of 2. It then combines the non-blurred and the blurred pictures together according to the gaussian filtered mask made. The output should be fake_im3.jpg
+
+
+## The code 
+The code consists of the function `fake_mini` which emcompasses the whole fake miniturazation process. `fake_mini` calls upon the other helper functions to first take in user point input (`get_pts`), split image into r,g,b channels, then blend the blurry and non-blurry copies of the channels (`blend_channel`), then stack the channels together, then save the image.
+
+`blend_channel` takes a channel of an image (red, green or blue) and takes the points given, along with other parameters to tweak the miniature. `blend_channel` makes the mask with `get_mask_y_coord`, applies the gaussian filter to the mask and the image with `gaus_picture`, and blends the non-blurry and blurry images with `make_LS`
